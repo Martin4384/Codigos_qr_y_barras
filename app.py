@@ -20,6 +20,10 @@ def generate_qr():
 @app.route('/barcode', methods=['GET'])
 def generate_barcode():
     data = request.args.get('data')
+     # Verificar si data está vacío o no válido
+    if not data:
+        return "Error: El parámetro 'data' está vacío o no es válido", 400
+
     barcode_img = barcode.get('code128', data, writer=ImageWriter())
     buffer = BytesIO()
     barcode_img.write(buffer)
