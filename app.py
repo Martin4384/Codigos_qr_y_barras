@@ -1,8 +1,8 @@
+import qrcode
+from barcode import Code128
+from barcode.writer import ImageWriter
 from flask import Flask, request, send_file
 from io import BytesIO
-import qrcode
-import barcode
-from barcode.writer import ImageWriter
 
 app = Flask(__name__)
 
