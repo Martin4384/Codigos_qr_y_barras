@@ -1,3 +1,4 @@
+import os
 import qrcode
 from barcode import Code128
 from barcode.writer import ImageWriter
@@ -10,6 +11,9 @@ app = Flask(__name__)
 @app.route('/qr_code', methods=['GET'])
 def generate_qr():
     data = request.args.get('data')
+
+    if not data:
+        return "Error: El parámetro 'data' está vacío o no es válido", 400
     
     # Configurar el tamaño del QR
     qr = qrcode.QRCode(
@@ -47,4 +51,8 @@ def generate_barcode():
     return send_file(buffer, mimetype='image/png')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    # Render asigna dinámicamente el puerto, por lo que lo obtenemos desde la variable de entorno PORT
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
+
+    #app.run(debug=True)
